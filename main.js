@@ -1,23 +1,34 @@
 const path = require('path');
 const { app, BrowserWindow, Menu} = require('electron');
-
 const isDev = process.env.NODE_ENV !== 'production';
 const isMac = process.platform === 'darwin';
 
-// Creates main window
+// Reminder: npx electronmon . 
+
+// Create Main Window
 function createMainWindow () {
   const mainWindow = new BrowserWindow ({
     title: 'Image Resizer',
     width: isDev ? 1000: 500,
     height: 800,
   });
-
-// Open devtools if in dev env
-if(isDev){
-  mainWindow.webContents.openDevTools();
+  // Open devtools if in dev env
+  if(isDev){
+    mainWindow.webContents.openDevTools();
+  }
+  // Loads index.html in mainWindow
+  mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
 }
 
-  mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
+// Create About Window that is selected from menu 30:30
+function createAboutWindow() {
+  const aboutWindow = new BrowserWindow ({
+    title: 'About Image Resizer',
+    width: 300,
+    height: 300,
+  });
+  // Loads about.html in aboutWindow
+  aboutWindow.loadFile(path.join(__dirname, './renderer/about.html'));
 }
 
 
@@ -28,7 +39,7 @@ app.whenReady().then(() => {
   // Implement menu
   const mainMenu = Menu.buildFromTemplate(menu);
   Menu.setApplicationMenu(mainMenu);
-  
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createMainWindow()
@@ -38,6 +49,16 @@ app.whenReady().then(() => {
 
 // Menu Template
 const menu = [
+  // Checking if user is on a Mac and adding About under software name
+  ...(isMac ? [{
+    label: app.name,
+    submenu: [
+      {
+        label: 'About',
+        click: () => createAboutWindow()
+      }
+    ]
+  }] : []),
   {
     label: 'File',
     submenu: [
@@ -47,7 +68,17 @@ const menu = [
         accelerator: 'CmdOrCtrl+W'
       }
     ]
-  }
+  },
+  // If Running on Windows, add a Help option with About
+  ...(!isMac ? [{
+    label: 'Help',
+    submenu: [
+      {
+        label: 'About',
+        click: () => createAboutWindow()
+      }
+    ]
+  }] : []),
 ]
 
 
