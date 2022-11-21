@@ -11,10 +11,24 @@ function loadImage(e) {
   const file = e.target.files[0]
   // Send file to Function to Check to make sure it is an image
   if (!isFileImage(file)) {
-    console.log('Please select an image');
+    console.log('Unknown file type, please select an image');
     return;
   }
+
+  // Get original dimensions of image that is chosen by using Image constructor and URL object
+  const image = new Image();
+  image.src = URL.createObjectURL(file);
+  // When loading, getting Image().width and setting the widthInput.value & heightInput.value
+  image.onload = function() {
+    widthInput.value = this.width;
+    heightInput.value = this.height;
+  }
+
   console.log('Success');
+  // initally the Height/Width form is set to display: none;, if successful image is selected the width/height form will show.
+  form.style.display = 'block';
+  // Show file name in App
+  filename.innerText = file.name;
 }
 
 // Make sure file is an accepted image file type
