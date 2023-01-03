@@ -1,6 +1,7 @@
 const { contextBridge } = require('electron')
 const os = require('os');
 const path = require('path');
+const Toastify = require('toastify-js')
 
 // Connecting Renderer to Node to show output path of resized photo
 
@@ -12,6 +13,11 @@ contextBridge.exposeInMainWorld('os', {
 contextBridge.exposeInMainWorld('path', {
   // Taking in arguments
   join: (...args) => path.join(...args)
+});
+
+// When using in render Toastify.toast 
+contextBridge.exposeInMainWorld('Toastify', {
+  toast: (options) => Toastify(options).showToast(),
 });
 
 // Example of checking node version in renderer.js

@@ -12,6 +12,7 @@ function loadImage(e) {
   const file = e.target.files[0]
   // Sends the file to the function below to validate that it is an image
   if (!isFileImage(file)) {
+    alertError('Unknown file type, please select an image');
     console.log('Unknown file type, please select an image');
     return;
   }
@@ -25,11 +26,13 @@ function loadImage(e) {
     heightInput.value = this.height;
   }
 
+  alertSuccess('Success!')
   console.log('Success');
   // initally the Height/Width form is set to display: none;, if successful image is selected the width/height form will show.
   form.style.display = 'block';
-  // Show file name in App
+  // Show file name and output path 
   filename.innerText = file.name;
+  outputPath.innerText = path.join(os.homedir(), 'imageResizer')
 }
 
 // Make sure file is an accepted image file type
@@ -37,6 +40,33 @@ function isFileImage(file) {
   const acceptedImageTypes = ['image/gif', 'image/png', 'image/jpeg'];
   return file && acceptedImageTypes.includes(file['type']);
 }
+
+function alertError(message){
+  Toastify.toast({
+    text: message,
+    duration: 5000,
+    close: false,
+    style: {
+      background: "linear-gradient(to right, #00b09b, #C93C3C)",
+      color: 'white',
+      textAlign: 'center'
+    },
+  })
+}
+
+function alertSuccess(message){
+  Toastify.toast({
+    text: message,
+    duration: 5000,
+    close: false,
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+      color: 'white',
+      textAlign: 'center'
+    }
+  })
+}
+
 
 // event of image input
 img.addEventListener('change', loadImage);
