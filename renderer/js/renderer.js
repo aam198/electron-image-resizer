@@ -5,6 +5,7 @@ const outputPath = document.getElementById('output-path')
 const heightInput = document.getElementById('height')
 const widthInput = document.getElementById('width')
 
+
 function loadImage(e) {
   // Get the image, when uploading with event it gets added to an array of Files
   // Getting first image

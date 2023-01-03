@@ -5,12 +5,17 @@ const isMac = process.platform === 'darwin';
 
 // Reminder: npx electronmon . 
 
-// Create Main Window
+// Create Main Window/BrowserWindow
 function createMainWindow () {
   const mainWindow = new BrowserWindow ({
     title: 'Image Resizer',
     width: isDev ? 1000: 500,
     height: 800,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: path.join(__dirname, 'preload.js'),
+    }
   });
   // Open devtools if in dev env
   if(isDev){
