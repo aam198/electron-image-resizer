@@ -9,7 +9,7 @@ function loadImage(e) {
   // Get the image, when uploading with event it gets added to an array of Files
   // Getting first image
   const file = e.target.files[0]
-  // Send file to Function to Check to make sure it is an image
+  // Sends the file to the function below to validate that it is an image
   if (!isFileImage(file)) {
     console.log('Unknown file type, please select an image');
     return;
