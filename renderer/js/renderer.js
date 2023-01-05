@@ -10,7 +10,7 @@ function loadImage(e) {
   // Get the image, when uploading with event it gets added to an array of Files
   // Getting first image
   const file = e.target.files[0]
-  // Sends the file to the function below to validate that it is an image
+  // Sends the file to a function below to validate that it is a valid image file
   if (!isFileImage(file)) {
     alertError('Unknown file type, please select an image');
     console.log('Unknown file type, please select an image');
@@ -73,5 +73,6 @@ function alertSuccess(message){
 }
 
 
-// event of image input
+// event of image input and form submit
 img.addEventListener('change', loadImage);
+form.addEventListener('submit', )
