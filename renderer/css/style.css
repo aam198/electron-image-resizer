@@ -1,6 +1,4 @@
-/*
-! tailwindcss v3.1.8 | MIT License | https://tailwindcss.com
-*/
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2&display=swap');
 
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -93,6 +91,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: 'Baloo Tamma 2', sans-serif;
   font-size: inherit;
   font-weight: inherit;
 }
@@ -726,6 +725,7 @@ video {
 
 .leading-normal {
   line-height: 1.5;
+  font-family: 'Baloo Tamma 2';
 }
 
 .tracking-wide {

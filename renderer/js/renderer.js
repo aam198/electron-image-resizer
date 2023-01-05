@@ -47,9 +47,11 @@ function alertError(message){
     duration: 5000,
     close: false,
     style: {
-      background: "linear-gradient(to right, #00b09b, #C93C3C)",
+      background: "linear-gradient(to right, #501616, #C93C3C)",
       color: 'white',
-      textAlign: 'center'
+      textAlign: 'center',
+      paddingTop: '0.5rem',
+      paddingBottom: '0.5rem',
     },
   })
 }
@@ -59,10 +61,13 @@ function alertSuccess(message){
     text: message,
     duration: 5000,
     close: false,
+    gravity: 'top',
     style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
+      background: "linear-gradient(to right, #597821, #96c93d)",
       color: 'white',
-      textAlign: 'center'
+      textAlign: 'center',
+      paddingTop: '0.5rem',
+      paddingBottom: '0.5rem',
     }
   })
 }
