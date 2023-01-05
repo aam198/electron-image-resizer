@@ -26,7 +26,7 @@ function loadImage(e) {
     heightInput.value = this.height;
   }
 
-  alertSuccess('Success!')
+  alertSuccess('Success! Image is ready to be resized!')
   console.log('Success');
   // initally the Height/Width form is set to display: none;, if successful image is selected the width/height form will show.
   form.style.display = 'block';
@@ -41,6 +41,7 @@ function sendImage(e) {
 
   const width = widthInput.value;
   const height = heightInput.value;
+  const imgPath = img.files[0].path;
 
   if(!img.files[0]){
     alertError('Please upload an image');
@@ -51,6 +52,14 @@ function sendImage(e) {
     alertError('Please fill in a height and width');
     return;
   }
+
+  // Send to main.js using ipcRenderer
+  ipcRenderer.send('image:resize', {
+    imgPath,
+    width,
+    height
+  });
+
 }
 
 // Make sure file is an accepted image file type

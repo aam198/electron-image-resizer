@@ -1,5 +1,5 @@
 const path = require('path');
-const { app, BrowserWindow, Menu} = require('electron');
+const { app, BrowserWindow, Menu, ipcMain} = require('electron');
 const isDev = process.env.NODE_ENV !== 'production';
 const isMac = process.platform === 'darwin';
 
@@ -85,6 +85,12 @@ const menu = [
     ]
   }] : []),
 ]
+
+// Respond to ipcRenderer resize request
+ipcMain.on('image:resize', (e, options) => {
+  // Should see imgPath, width, height
+  console.log(options); 
+})
 
 
 app.on('window-all-closed', () => {
