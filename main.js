@@ -3,14 +3,19 @@ const os = require('os');
 const fs = require('fs');
 const resizeImg = require('resize-img');
 const { app, BrowserWindow, Menu, ipcMain, shell} = require('electron');
+
+process.env.NODE_ENV = 'production';
 const isDev = process.env.NODE_ENV !== 'production';
 const isMac = process.platform === 'darwin';
+
+
+let mainWindow;
 
 // Reminder: npx electronmon . 
 
 // Create Main Window/BrowserWindow
 function createMainWindow () {
-  const mainWindow = new BrowserWindow ({
+  mainWindow = new BrowserWindow ({
     title: 'Image Resizer',
     width: isDev ? 1000: 500,
     height: 800,
@@ -48,6 +53,10 @@ app.whenReady().then(() => {
   const mainMenu = Menu.buildFromTemplate(menu);
   Menu.setApplicationMenu(mainMenu);
 
+  // Remove mainWindow from memory on close
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  });
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createMainWindow()
