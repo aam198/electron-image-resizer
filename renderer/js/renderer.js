@@ -59,8 +59,12 @@ function sendImage(e) {
     width,
     height
   });
-
 }
+
+// Receiving/Catch mainWindow.webContents.send('image:done'); event from main.js for Success message
+ipcRenderer.on('image:done',  () => {
+  alertSuccess(`Image resized to ${widthInput.value} x ${heightInput.value}`)
+})
 
 // Make sure file is an accepted image file type
 function isFileImage(file) {

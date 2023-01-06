@@ -1,7 +1,7 @@
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
-const resizeImage = require('resize-img');
+const resizeImg = require('resize-img');
 const { app, BrowserWindow, Menu, ipcMain, shell} = require('electron');
 const isDev = process.env.NODE_ENV !== 'production';
 const isMac = process.platform === 'darwin';
@@ -109,9 +109,10 @@ async function resizeImage ({ imgPath, width, height, dest }){
     });
     
     // Create filename, will override original image, 
-    // TODO: should add a confirmation?
+    // TODO: should add a confirmation to overwrite?
     const filename = path.basename(imgPath);
-    // Create dest folder if not exists
+
+    // Create dest folder if one does not exist
     if (!fs.existsSync(dest)){
       fs.mkdirSync(dest);
     }
@@ -119,9 +120,11 @@ async function resizeImage ({ imgPath, width, height, dest }){
     // Then Write file to dest 
     fs.writeFileSync(path.join(dest, filename), newPath);
     
-    // Send success to renderer.js for Alert on frontend
+    // Send success to renderer.js for Alert on frontend, sending an event
+    mainWindow.webContents.send('image:done');
 
     // Open destination folder so you can see the image
+    shell.openPath(dest);
   }
   catch (error){
     console.log(error);
